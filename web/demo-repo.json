@@ -1,0 +1,106 @@
+{
+ "name": "lovelorn-shop",
+ "note": "A tiny shop with planted lonely functions (and some false-positive traps). Ages are fake.",
+ "files": [
+  {
+   "path": "app_rb/controllers/orders_controller.rb",
+   "content": "class OrdersController < ApplicationController\n  before_action :load_order\n\n  def show\n    render json: @order\n  end\n\n  def refund\n    render json: { refunded: true }\n  end\n\n  private\n\n  def load_order\n    @order = Order.find(params[:id])\n  end\n\n  def legacy_discount(order)\n    # Black Friday 2021 only\n    order.total * 0.8\n  end\nend\n",
+   "ageDays": 1050
+  },
+  {
+   "path": "app/route.ts",
+   "content": "export async function GET(): Promise<Response> {\n  return new Response('ok');\n}\n",
+   "ageDays": 3
+  },
+  {
+   "path": "index.html",
+   "content": "<!doctype html>\n<title>Lovelorn Shop</title>\n<button onclick=\"openCartDrawer()\">Cart</button>\n<script src=\"src/drawer.js\"></script>\n",
+   "ageDays": 3
+  },
+  {
+   "path": "lib/matchmaker.rb",
+   "content": "module Matchmaker\n  class Pairing\n    def initialize(a, b)\n      @a = a\n      @b = b\n    end\n\n    def to_s\n      \"#{@a} <3 #{@b}\"\n    end\n\n    def compatible?\n      score > 50\n    end\n\n    def match\n      \"everyone deserves someone\"\n    end\n\n    private\n\n    def score\n      (@a.length * 7 + @b.length * 3) % 100\n    end\n  end\nend\n",
+   "ageDays": 365
+  },
+  {
+   "path": "package.json",
+   "content": "{\n  \"name\": \"lovelorn-shop\",\n  \"private\": true,\n  \"version\": \"0.3.1\",\n  \"scripts\": { \"seed\": \"node scripts/seed.js\" }\n}\n",
+   "ageDays": 3
+  },
+  {
+   "path": "pages/api/checkout.js",
+   "content": "import { cartTotal, applyCoupon } from '../../src/utils/cart.js';\n\nexport default function handler(req, res) {\n  const total = applyCoupon(cartTotal(req.body.items), req.body.coupon);\n  res.status(200).json({ total });\n}\n",
+   "ageDays": 3
+  },
+  {
+   "path": "pages/index.jsx",
+   "content": "import Report from '../src/components/Report.jsx';\nimport { ProductCard } from '../src/components/ProductCard.jsx';\n\nexport default function Home({ products, orders }) {\n  return (\n    <main>\n      {products.map((p) => <ProductCard key={p.id} product={p} />)}\n      <Report orders={orders} />\n    </main>\n  );\n}\n\nexport async function getServerSideProps() {\n  return { props: { products: [], orders: [] } };\n}\n",
+   "ageDays": 3
+  },
+  {
+   "path": "scripts/seed.js",
+   "content": "#!/usr/bin/env node\nconst { Emailer } = require('../src/emailer');\n\nfunction seedProducts() {\n  return [{ id: 1, name: 'lonely heart mug', price: 12 }];\n}\n\nfunction seedUsersFromCsv(path) {\n  const fs = require('fs');\n  return fs.readFileSync(path, 'utf8').split('\\n').map((line) => line.split(','));\n}\n\nconsole.log(seedProducts(), new Emailer('bot@shop.test'));\n",
+   "ageDays": 890
+  },
+  {
+   "path": "services/billing/app.py",
+   "content": "from flask import Flask\nfrom .invoice import Invoice, render\n\napp = Flask(__name__)\n\n\n@app.route(\"/invoice\")\ndef show_invoice():\n    return render(Invoice([]))\n\n\ndef _unused_healthcheck():\n    return {\"ok\": True}\n\n\nif __name__ == \"__main__\":\n    app.run()\n",
+   "ageDays": 300
+  },
+  {
+   "path": "services/billing/invoice.py",
+   "content": "\"\"\"Invoice helpers.\"\"\"\nfrom datetime import datetime\n\n\nclass Invoice:\n    def __init__(self, lines):\n        self.lines = lines\n\n    def __repr__(self):\n        return f\"Invoice({len(self.lines)} lines)\"\n\n    def total(self):\n        return sum(line.amount for line in self.lines)\n\n    def _legacy_tax(self, rate, region, exempt, rounding, currency):\n        \"\"\"Old VAT rules from before the EU change.\"\"\"\n        if exempt:\n            return 0\n        tax = self.total() * rate\n        try:\n            return round(tax, rounding)\n        except:\n            return tax\n\n\ndef format_invoice_date(dt):\n    return dt.strftime(\"%Y-%m-%d\")\n\n\ndef parse_invoice_number(raw):\n    return int(raw.strip().lstrip(\"INV-\"))\n\n\ndef render(invoice):\n    return f\"{format_invoice_date(datetime.now())}: {invoice.total()}\"\n",
+   "ageDays": 1188
+  },
+  {
+   "path": "services/inventory/main_test.go",
+   "content": "package main\n\nimport \"testing\"\n\nfunc TestRestock(t *testing.T) {\n\tif restock(Stock{Count: 1}).Count != 11 {\n\t\tt.Fatal(\"restock is broken\")\n\t}\n}\n",
+   "ageDays": 3
+  },
+  {
+   "path": "services/inventory/main.go",
+   "content": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n)\n\ntype Stock struct {\n\tSKU   string\n\tCount int\n}\n\nfunc (s Stock) String() string {\n\treturn fmt.Sprintf(\"%s x%d\", s.SKU, s.Count)\n}\n\nfunc init() {\n\tfmt.Println(\"warming up the warehouse\")\n}\n\nfunc main() {\n\tfmt.Println(restock(Stock{SKU: \"MUG-1\", Count: 2}))\n}\n\nfunc restock(s Stock) Stock {\n\ts.Count += 10\n\treturn s\n}\n\n// normalizeSKU upper-cases and trims a SKU. Replaced by the barcode scanner.\nfunc normalizeSKU(raw string) string {\n\treturn strings.ToUpper(strings.TrimSpace(raw))\n}\n\nfunc (s Stock) isLow() bool {\n\treturn s.Count < 3\n}\n",
+   "ageDays": 777
+  },
+  {
+   "path": "src/components/ProductCard.jsx",
+   "content": "import { slugify, titleCase } from '../utils/strings.js';\n\nexport function PriceTag({ amount }) {\n  return <span className=\"price\">${amount.toFixed(2)}</span>;\n}\n\nexport function ProductCard({ product }) {\n  return (\n    <a href={`/p/${slugify(product.name)}`} className=\"card\">\n      <h3>{titleCase(product.name)}</h3>\n      <p>Don't miss it, it's on sale</p>\n      <PriceTag amount={product.price} />\n    </a>\n  );\n}\n\nexport function LegacyBadge({ label }) {\n  return <b className=\"badge\">{label}</b>;\n}\n",
+   "ageDays": 230
+  },
+  {
+   "path": "src/components/Report.jsx",
+   "content": "import { cartTotal } from '../utils/cart.js';\n\nexport default function Report({ orders }) {\n  const rows = orders.map((o) => {\n    const d = new Date(o.createdAt);\n    const month = String(d.getMonth() + 1).padStart(2, '0');\n    const day = String(d.getDate()).padStart(2, '0');\n    const label = d.getFullYear() + '/' + month + '/' + day;\n    return <tr key={o.id}><td>{label}</td><td>{cartTotal(o.items)}</td></tr>;\n  });\n  return <table>{rows}</table>;\n}\n",
+   "ageDays": 30
+  },
+  {
+   "path": "src/drawer.js",
+   "content": "function openCartDrawer() {\n  document.querySelector('#cart').classList.add('open');\n}\n\nfunction closeCartDrawerOld() {\n  document.querySelector('#cart').classList.remove('open');\n}\n",
+   "ageDays": 402
+  },
+  {
+   "path": "src/emailer.ts",
+   "content": "export class Emailer {\n  constructor(private readonly from: string) {}\n\n  send(to: string, body: string): void {\n    this.deliver(to, body);\n  }\n\n  private deliver(to: string, body: string): void {\n    console.log(`from ${this.from} to ${to}: ${body}`);\n  }\n\n  private retryWithBackoff(attempt: number, maxAttempts: number, baseDelayMs: number, jitter: boolean, onGiveUp: () => void): number {\n    if (attempt >= maxAttempts) {\n      onGiveUp();\n      return -1;\n    }\n    const delay: any = baseDelayMs * Math.pow(2, attempt);\n    return jitter ? delay + Math.random() * 100 : delay;\n  }\n}\n",
+   "ageDays": 512
+  },
+  {
+   "path": "src/utils/cart.js",
+   "content": "import { formatDate } from './date.js';\n\nexport function cartTotal(items) {\n  return items.reduce((sum, item) => sum + item.price * item.qty, 0);\n}\n\nexport function applyCoupon(total, coupon) {\n  if (coupon == null) return total;\n  return Math.round(total * (1 - coupon.percent / 100) * 100) / 100;\n}\n\nexport function receiptHeader(order) {\n  return `Order ${order.id} on ${formatDate(order.createdAt)}`;\n}\n",
+   "ageDays": 45
+  },
+  {
+   "path": "src/utils/date.js",
+   "content": "/**\n * Formats a date the way the 2019 reporting system wanted it.\n * Kept \"just in case\" during the migration.\n */\nexport function formatLegacyDate(date, separator, padMonths, includeTime, locale) {\n  var d = new Date(date);\n  var month = String(d.getMonth() + 1).padStart(2, '0');\n  var day = String(d.getDate()).padStart(2, '0');\n  var out = d.getFullYear() + separator + month + separator + day;\n  if (includeTime) {\n    out += ' ' + String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');\n  }\n  return out;\n}\n\nexport function formatDate(date) {\n  return new Date(date).toISOString().slice(0, 10);\n}\n\n// TODO: remove after the timezone rewrite\nexport function daysBetween(a, b) {\n  const ms = Math.abs(new Date(b) - new Date(a));\n  return Math.floor(ms / 86400000);\n}\n",
+   "ageDays": 1402
+  },
+  {
+   "path": "src/utils/strings.js",
+   "content": "export const slugify = (text) =>\n  text.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');\n\nexport function titleCase(str) {\n  return str.split(' ').map((w) => w[0].toUpperCase() + w.slice(1)).join(' ');\n}\n\nfunction shout(message) {\n  return message.toUpperCase() + '!!!';\n}\n\nexport function love() {\n  return 'You found me. I was here all along.';\n}\n",
+   "ageDays": 610
+  },
+  {
+   "path": "tests/test_invoice.py",
+   "content": "from services.billing.invoice import Invoice\n\n\ndef test_empty_invoice_total_is_zero():\n    assert Invoice([]).total() == 0\n\n\ndef make_fake_line(amount):\n    class Line:\n        pass\n    line = Line()\n    line.amount = amount\n    return line\n",
+   "ageDays": 3
+  }
+ ]
+}

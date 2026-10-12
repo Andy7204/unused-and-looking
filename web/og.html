@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Unused &amp; Looking OG image</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700&family=Fredoka:wght@600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; }
+  body { width: 1200px; height: 630px; overflow: hidden; font-family: 'DM Sans', sans-serif; background: linear-gradient(120deg, #ff3d7f, #ff7a59 45%, #8b5cf6); position: relative; color: #fff; }
+  .hearts span { position: absolute; opacity: .16; font-size: 90px; }
+  .copy { position: absolute; left: 70px; top: 80px; width: 600px; }
+  .pill { display: inline-block; background: rgba(255,255,255,.2); padding: 8px 18px; border-radius: 999px; font-weight: 700; font-size: 22px; }
+  h1 { font-family: Fredoka, sans-serif; font-size: 84px; line-height: .98; margin: 22px 0 18px; letter-spacing: -1px; }
+  p { font-size: 30px; line-height: 1.3; margin: 0 0 28px; opacity: .95; }
+  code { font-family: 'JetBrains Mono', monospace; font-size: 26px; background: #2a1830; padding: 12px 20px; border-radius: 16px; display: inline-block; }
+  code::before { content: '$ '; color: #ff7a59; }
+  .stack { position: absolute; right: 70px; top: 70px; width: 360px; height: 490px; }
+  .card { position: absolute; inset: 0; border-radius: 30px; background: #fff; box-shadow: 0 30px 60px -20px rgba(60,0,40,.5); overflow: hidden; color: #2a1830; }
+  .card.b2 { transform: rotate(8deg) translate(26px, 10px) scale(.95); opacity: .7; }
+  .card.b3 { transform: rotate(-9deg) translate(-30px, 18px) scale(.92); opacity: .55; }
+  .photo { height: 270px; position: relative; }
+  .photo svg { width: 100%; height: 100%; }
+  .photo .t { position: absolute; left: 20px; bottom: 16px; color: #fff; font-family: Fredoka; font-size: 34px; font-weight: 700; text-shadow: 0 2px 10px rgba(0,0,0,.4); }
+  .photo .t small { display: block; font: 500 16px 'JetBrains Mono'; opacity: .9; }
+  .photo::after { content: ''; position: absolute; inset: 45% 0 0; background: linear-gradient(transparent, rgba(30,10,40,.8)); }
+  .photo .t { z-index: 2; }
+  .body { padding: 16px 20px; font-size: 19px; line-height: 1.4; }
+  .chips span { display: inline-block; background: #fff0f5; color: #ff3d7f; font-weight: 700; padding: 4px 12px; border-radius: 999px; margin: 10px 6px 0 0; font-size: 16px; }
+  .btns { position: absolute; right: 120px; bottom: 34px; display: flex; gap: 18px; }
+  .btns b { width: 64px; height: 64px; border-radius: 50%; background: #fff; display: grid; place-items: center; font-size: 30px; box-shadow: 0 10px 24px -8px rgba(60,0,40,.5); }
+</style>
+</head>
+<body>
+  <div class="hearts"><span style="left:540px;top:10px">♥</span><span style="left:30px;top:470px">♥</span><span style="left:660px;top:470px">♥</span></div>
+  <div class="copy">
+    <span class="pill">💔 A dating app for your dead code</span>
+    <h1>Unused &amp; Looking</h1>
+    <p>Your codebase is full of lonely functions. Help them find love (or delete them).</p>
+    <code>npx unused-and-looking</code>
+  </div>
+  <div class="stack">
+    <div class="card b3"></div>
+    <div class="card b2"></div>
+    <div class="card" id="c"></div>
+  </div>
+  <div class="btns"><b style="color:#ff4f6d">✕</b><b style="color:#7c6cff">★</b><b style="color:#18c98b">♥</b></div>
+  <script type="module">
+    import { avatarSvg } from './core/avatar.js';
+    document.getElementById('c').innerHTML = `<div class="photo">${avatarSvg('formatLegacyDate').replace('<svg ', '<svg preserveAspectRatio="xMidYMid slice" ')}<div class="t">formatLegacyDate(), 1,402<small>📍 src/utils/date.js:14</small></div></div>
+      <div class="body">5 params, 18 lines. Looking for someone who parses dates. Ghosted since December 2022.<div class="chips"><span>📅 dates</span><span>🧵 strings</span></div></div>`;
+  </script>
+</body>
+</html>

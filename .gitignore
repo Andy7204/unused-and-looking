@@ -1,0 +1,8 @@
+node_modules/
+_site/
+web/core/
+*.tgz
+.shots-profile*/
+.DS_Store
+Thumbs.db
+breakup.md

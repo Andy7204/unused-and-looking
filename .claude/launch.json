@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "unused-and-looking-web",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["scripts/serve.js", "5186"],
+      "port": 5186
+    }
+  ]
+}

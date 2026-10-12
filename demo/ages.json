@@ -1,0 +1,16 @@
+{
+  "_comment": "Fake 'days since last touched' for the bundled demo, so it has ages without git history.",
+  "src/utils/date.js": 1402,
+  "src/utils/strings.js": 610,
+  "src/utils/cart.js": 45,
+  "src/components/ProductCard.jsx": 230,
+  "src/components/Report.jsx": 30,
+  "src/emailer.ts": 512,
+  "scripts/seed.js": 890,
+  "services/billing/invoice.py": 1188,
+  "services/billing/app.py": 300,
+  "services/inventory/main.go": 777,
+  "app_rb/controllers/orders_controller.rb": 1050,
+  "lib/matchmaker.rb": 365,
+  "src/drawer.js": 402
+}

@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Unused &amp; Looking</title>
+  <meta name="description" content="Your codebase is full of lonely functions. Swipe through your unused functions like a dating app: match them, break up with them, export a cleanup list.">
+  <meta name="theme-color" content="#ff3d7f">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Unused & Looking: a dating app for your dead code">
+  <meta property="og:description" content="Your codebase is full of lonely functions. Help them find love (or delete them).">
+  <meta property="og:url" content="https://andy7204.github.io/unused-and-looking/">
+  <meta property="og:image" content="https://andy7204.github.io/unused-and-looking/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Unused & Looking: a dating app for your dead code">
+  <meta name="twitter:description" content="Your codebase is full of lonely functions. Help them find love (or delete them).">
+  <meta name="twitter:image" content="https://andy7204.github.io/unused-and-looking/og-image.png">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ff3d7f'/%3E%3Cstop offset='1' stop-color='%238b5cf6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23g)' d='M50 88S10 64 10 36a20 20 0 0 1 40-6 20 20 0 0 1 40 6c0 28-40 52-40 52z'/%3E%3Ctext x='50' y='52' font-family='monospace' font-weight='700' font-size='26' fill='white' text-anchor='middle'%3E()%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Fredoka:wght@500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // Apply the saved theme before first paint.
+    try { const t = localStorage.getItem('ual:theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+    const q = new URLSearchParams(location.search).get('theme'); if (q === 'dark' || q === 'light') document.documentElement.dataset.theme = q;
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="Unused &amp; Looking home">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 100 100"><path d="M50 88S10 64 10 36a20 20 0 0 1 40-6 20 20 0 0 1 40 6c0 28-40 52-40 52z"/><text x="50" y="52" text-anchor="middle">()</text></svg></span>
+      <span class="brand-name">Unused <em>&amp;</em> Looking</span>
+    </a>
+    <nav class="tabs" id="tabs" aria-label="Sections" hidden>
+      <button data-view="deck" class="tab"><span class="tab-ico" aria-hidden="true">🔥</span><span>Swipe</span></button>
+      <button data-view="matches" class="tab"><span class="tab-ico" aria-hidden="true">💘</span><span>Matches</span><b class="count" data-count="matches">0</b></button>
+      <button data-view="breakup" class="tab"><span class="tab-ico" aria-hidden="true">💔</span><span>Breakups</span><b class="count" data-count="breakup">0</b></button>
+      <button data-view="complicated" class="tab"><span class="tab-ico" aria-hidden="true">🤔</span><span>Complicated</span><b class="count" data-count="complicated">0</b></button>
+      <button data-view="stats" class="tab"><span class="tab-ico" aria-hidden="true">📊</span><span>Stats</span></button>
+    </nav>
+    <div class="top-actions">
+      <span class="source-pill" id="sourcePill" hidden></span>
+      <button class="icon-btn" id="themeBtn" aria-label="Toggle dark mode" title="Toggle dark mode"><span aria-hidden="true" class="theme-ico"></span></button>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <!-- HOME -->
+    <section class="view view-home" id="view-home" data-view="home">
+      <div class="hero">
+        <p class="eyebrow">A dating app for your dead code</p>
+        <h1>Your codebase is full of <span class="grad">lonely functions.</span></h1>
+        <p class="lede">Help them find love (or delete them). Swipe right to find where they belong, swipe left to add them to your Breakup List.</p>
+        <form class="repo-form" id="repoForm" autocomplete="off">
+          <label class="sr-only" for="repoInput">Public GitHub repo</label>
+          <div class="repo-input">
+            <span class="gh" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></span>
+            <input id="repoInput" name="repo" type="text" inputmode="url" spellcheck="false" placeholder="github.com/owner/repo" aria-describedby="repoHint">
+            <button class="btn btn-primary" type="submit">Find singles</button>
+          </div>
+          <p class="hint" id="repoHint">Public repos up to ~500 source files. JS/TS, Python, Go and Ruby.</p>
+        </form>
+        <div class="quick">
+          <button class="btn btn-ghost btn-demo" id="demoBtn" type="button"><span aria-hidden="true">✨</span> Try the demo repo</button>
+          <label class="btn btn-ghost" for="folderInput"><span aria-hidden="true">📁</span> Pick a local folder</label>
+          <input id="folderInput" type="file" webkitdirectory directory multiple hidden>
+        </div>
+        <div class="featured" aria-label="Featured repos">
+          <span class="featured-label">Or meet the singles of:</span>
+          <div class="featured-list" id="featured"></div>
+        </div>
+        <details class="token-box">
+          <summary>Rate-limited? Add a GitHub token (optional)</summary>
+          <p>Without a token GitHub allows 60 API calls an hour. One repo costs 1 call (plus a few for ages). The token stays in this browser and is only ever sent to api.github.com.</p>
+          <div class="token-row">
+            <label class="sr-only" for="tokenInput">GitHub token</label>
+            <input id="tokenInput" type="password" placeholder="ghp_… (no scopes needed)" autocomplete="off" spellcheck="false">
+            <label class="remember"><input type="checkbox" id="tokenRemember"> Remember</label>
+          </div>
+        </details>
+        <div class="cli-box">
+          <span class="cli-label">Prefer the terminal?</span>
+          <code id="cliCmd">npx unused-and-looking</code>
+          <button class="copy-mini" data-copy="npx unused-and-looking" aria-label="Copy command">Copy</button>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="phone">
+          <div class="phone-card c3"></div>
+          <div class="phone-card c2"></div>
+          <div class="phone-card c1" id="heroCard"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOADING -->
+    <section class="view view-loading" id="view-loading" data-view="loading" hidden>
+      <div class="loader" role="status" aria-live="polite">
+        <div class="beating-heart" aria-hidden="true">💗</div>
+        <h2 id="loadTitle">Looking for singles…</h2>
+        <p id="loadDetail">Warming up</p>
+        <div class="progress"><div class="bar" id="loadBar"></div></div>
+        <button class="btn btn-ghost" id="cancelLoad" type="button">Cancel</button>
+      </div>
+    </section>
+
+    <!-- ERROR -->
+    <section class="view view-error" id="view-error" data-view="error" hidden>
+      <div class="error-box" role="alert">
+        <div class="error-emoji" aria-hidden="true" id="errEmoji">💔</div>
+        <h2 id="errTitle">Something went wrong</h2>
+        <p id="errText"></p>
+        <div class="error-cli" id="errCli" hidden>
+          <code>git clone <span id="errCloneUrl"></span> &amp;&amp; npx unused-and-looking <span id="errCloneDir"></span></code>
+          <button class="copy-mini" id="errCopy">Copy</button>
+        </div>
+        <div class="error-actions">
+          <button class="btn btn-primary" id="errBack" type="button">Try another repo</button>
+          <button class="btn btn-ghost" id="errDemo" type="button">Open the demo instead</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- DECK -->
+    <section class="view view-deck" id="view-deck" data-view="deck" hidden>
+      <div class="deck-wrap">
+        <p class="deck-meta" id="deckMeta"></p>
+        <div class="deck" id="deck" aria-live="polite"></div>
+        <div class="deck-empty" id="deckEmpty" hidden></div>
+        <div class="actions" id="actions">
+          <button class="act act-undo" id="undoBtn" aria-label="Undo last swipe (Z)" title="Undo (Z)">↶</button>
+          <button class="act act-nope" id="nopeBtn" aria-label="Break up: add to Breakup List (Left arrow)" title="Break up (←)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+          <button class="act act-super" id="superBtn" aria-label="It's complicated: review later (Up arrow)" title="It's complicated (↑)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg></button>
+          <button class="act act-like" id="likeBtn" aria-label="Match: see where it belongs (Right arrow)" title="Match (→)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-8.8-8.6C2 8.4 4.2 4.8 7.6 4.8c1.9 0 3.2 1 4.4 2.5 1.2-1.5 2.5-2.5 4.4-2.5 3.4 0 5.6 3.6 4.4 6.6C19 15.6 12 20 12 20z"/></svg></button>
+          <button class="act act-info" id="infoBtn" aria-label="Read full profile (Space)" title="Full profile (Space)">i</button>
+        </div>
+        <p class="kbd-hint"><kbd>←</kbd> break up <kbd>↑</kbd> it's complicated <kbd>→</kbd> match <kbd>Space</kbd> profile <kbd>Z</kbd> undo</p>
+      </div>
+    </section>
+
+    <!-- LISTS -->
+    <section class="view view-list" id="view-matches" data-view="matches" hidden>
+      <div class="list-head"><h2>💘 Matches</h2><p>Functions you swiped right on, and the places that could use them.</p></div>
+      <div class="list" id="matchesList"></div>
+    </section>
+    <section class="view view-list" id="view-breakup" data-view="breakup" hidden>
+      <div class="list-head">
+        <h2>💔 Breakup List</h2>
+        <p>Deletion candidates. Nothing is deleted for you: export the list and open a cleanup PR.</p>
+        <div class="list-actions">
+          <button class="btn btn-primary" id="copyMd" type="button">Copy as Markdown</button>
+          <button class="btn btn-ghost" id="downloadMd" type="button">Download breakup.md</button>
+        </div>
+      </div>
+      <div class="list" id="breakupList"></div>
+    </section>
+    <section class="view view-list" id="view-complicated" data-view="complicated" hidden>
+      <div class="list-head"><h2>🤔 It's complicated</h2><p>Super-liked for later. Not ready to commit, not ready to let go.</p></div>
+      <div class="list" id="complicatedList"></div>
+    </section>
+
+    <!-- STATS -->
+    <section class="view view-stats" id="view-stats" data-view="stats" hidden>
+      <div class="stats-hero">
+        <h2 id="statsHeadline"></h2>
+        <p id="statsSub"></p>
+      </div>
+      <div class="tiles" id="tiles"></div>
+      <div class="stats-grid">
+        <div class="panel">
+          <h3>Singles by language</h3>
+          <div id="langBars"></div>
+        </div>
+        <div class="panel">
+          <h3>Loneliest hearts</h3>
+          <ol class="lonely-list" id="lonelyList"></ol>
+        </div>
+      </div>
+      <div class="panel share-panel">
+        <h3>Share the loneliest</h3>
+        <div class="share-layout">
+          <canvas id="statsCanvas" width="1200" height="630" aria-label="Share card preview"></canvas>
+          <div class="share-actions">
+            <button class="btn btn-primary" data-share="download" type="button">Download image</button>
+            <button class="btn btn-ghost" data-share="link" type="button">Copy link</button>
+            <a class="btn btn-ghost" data-share="x" target="_blank" rel="noopener">Post on X</a>
+            <div class="badge-box">
+              <p>README badge</p>
+              <img id="badgeImg" alt="lonely functions badge" height="20">
+              <code id="badgeCode"></code>
+              <button class="copy-mini" id="badgeCopy" type="button">Copy</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="shy-note" id="shyNote"></p>
+    </section>
+  </main>
+
+  <nav class="bottom-tabs" id="bottomTabs" aria-label="Sections" hidden></nav>
+
+  <!-- Modals -->
+  <div class="modal" id="profileModal" role="dialog" aria-modal="true" aria-labelledby="profileTitle" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-sheet" tabindex="-1">
+      <button class="modal-x" data-close aria-label="Close">×</button>
+      <div id="profileBody"></div>
+    </div>
+  </div>
+  <div class="modal" id="matchModal" role="dialog" aria-modal="true" aria-labelledby="matchTitle" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-sheet match-sheet" tabindex="-1">
+      <button class="modal-x" data-close aria-label="Close">×</button>
+      <div id="matchBody"></div>
+    </div>
+  </div>
+  <div class="modal" id="shareModal" role="dialog" aria-modal="true" aria-labelledby="shareTitle" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-sheet" tabindex="-1">
+      <button class="modal-x" data-close aria-label="Close">×</button>
+      <h2 id="shareTitle">Share this profile</h2>
+      <canvas id="shareCanvas" width="1200" height="630" aria-label="Share card preview"></canvas>
+      <div class="share-actions row">
+        <button class="btn btn-primary" data-share="download" type="button">Download image</button>
+        <button class="btn btn-ghost" data-share="link" type="button">Copy link</button>
+        <a class="btn btn-ghost" data-share="x" target="_blank" rel="noopener">Post on X</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <div class="hearts-layer" id="hearts" aria-hidden="true"></div>
+
+  <footer class="foot">
+    <p>Read-only: nothing is deleted or edited, and nothing leaves your browser except requests to GitHub's public API. <a href="https://github.com/Andy7204/unused-and-looking">Source on GitHub</a> · More weird dev toys by <a href="https://github.com/Andy7204">@Andy7204</a></p>
+  </footer>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

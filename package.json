@@ -1,0 +1,59 @@
+{
+  "name": "unused-and-looking",
+  "version": "1.0.0",
+  "description": "Your codebase is full of lonely functions. Find unused functions in JS/TS, Python, Go and Ruby, then swipe through them like a dating app. Zero dependencies.",
+  "type": "module",
+  "bin": {
+    "unused-and-looking": "src/cli.js"
+  },
+  "main": "src/core/index.js",
+  "exports": {
+    ".": "./src/core/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "web",
+    "!web/og-image.png",
+    "!web/og.html",
+    "demo",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test",
+    "start": "node scripts/serve.js",
+    "build:demo": "node scripts/build-demo.js",
+    "build:web": "node scripts/build-web.js",
+    "demo": "node src/cli.js --demo"
+  },
+  "keywords": [
+    "dead-code",
+    "unused",
+    "unused-functions",
+    "static-analysis",
+    "code-cleanup",
+    "refactoring",
+    "cli",
+    "javascript",
+    "typescript",
+    "python",
+    "golang",
+    "ruby",
+    "dating-app",
+    "fun"
+  ],
+  "author": "Andy7204 (https://github.com/Andy7204)",
+  "license": "MIT",
+  "homepage": "https://andy7204.github.io/unused-and-looking/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Andy7204/unused-and-looking.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Andy7204/unused-and-looking/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
